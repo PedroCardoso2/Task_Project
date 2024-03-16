@@ -1,6 +1,7 @@
 package com.example.task.taskToday.domain.entities;
 
 
+import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -45,4 +46,11 @@ public class Usuario {
     @NotBlank
     private Date dataNascimento;
 
+    public Usuario(DadosUsuarioCadastrar usu) {
+        this.nome = usu.name();
+        this.email = usu.email();
+        this.senha = usu.senha();
+        this.dataNascimento = usu.dataNascimento();
+        this.sobreNome = usu.sobreNome();
+    }
 }
