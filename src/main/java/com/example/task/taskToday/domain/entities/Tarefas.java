@@ -11,12 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Entity
-@Table(name = "tarefas")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class Tarefas {
 
 

@@ -1,5 +1,6 @@
 package com.example.task.taskToday.domain.dtos;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,14 +11,17 @@ public record DadosUsuarioCadastrar(
         Long id,
 
         @NotBlank
-        String name,
+        @Column(name = "nome_Usu")
+        String nome,
 
         @NotBlank
+        @Column(name = "sobrenome_Usu")
         String sobreNome,
         @NotBlank
         String email,
         @NotBlank
-        Date dataNascimento,
+        @Column(name = "data_Nascimento")
+        String dataNascimento,
         @NotBlank
         String senha
 ) {

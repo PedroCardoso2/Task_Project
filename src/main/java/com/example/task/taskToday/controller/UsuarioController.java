@@ -3,6 +3,7 @@ package com.example.task.taskToday.controller;
 
 import com.example.task.taskToday.domain.UsuarioRepository;
 
+import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioSelecionado;
 import com.example.task.taskToday.domain.entities.Usuario;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/us")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
     @Autowired
@@ -28,12 +29,27 @@ public class UsuarioController {
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
     }
 
-    // Cadastrar (Código 204)
+
+    // Cadastrar (Código 201)
     @PostMapping
     public ResponseEntity inserirUsuario(@RequestBody @Valid DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder){
         var usuario = new Usuario(usu);
         db.save(usuario);
-        var uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        var uri = uriComponentsBuilder.path("/cd-usu").buildAndExpand(usuario.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosUsuarioSelecionado(usuario));
+    }
+
+    // Atualizar (Código 200)
+    @PutMapping
+    public ResponseEntity atualizarDadosUsuario(@RequestBody @Valid DadosAtualizacaoUsuario usu){
+        var usuario = db.getReferenceById(usu.id());
+
+        usuario.atualizarDados(usu);
+
+        return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
 
     }
+
+
 }
