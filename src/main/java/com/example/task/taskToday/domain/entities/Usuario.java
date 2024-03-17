@@ -21,9 +21,10 @@ import java.sql.Date;
 @Setter
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Usu")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "nome_Usu")
     @NotNull
@@ -38,14 +39,13 @@ public class Usuario {
     @NotBlank
     private String senha;
 
-
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
 
     @Column(name = "data_Nascimento")
-    @NotBlank
+    @NotNull
     private String dataNascimento;
 
     // Cadastro
