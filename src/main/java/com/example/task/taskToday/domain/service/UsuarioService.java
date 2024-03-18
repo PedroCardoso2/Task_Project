@@ -1,6 +1,7 @@
 package com.example.task.taskToday.domain.service;
 
 import com.example.task.taskToday.domain.UsuarioRepository;
+import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioSelecionado;
 import com.example.task.taskToday.domain.entities.Usuario;
@@ -35,7 +36,14 @@ public class UsuarioService {
         return ResponseEntity.created(uri).body(new DadosUsuarioSelecionado(usuario));
     }
 
+    public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu){
+        var usuario = repository.getReferenceById(usu.id());
 
+        usuario.atualizarDados(usu);
+
+        return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
+
+    }
 
 
 

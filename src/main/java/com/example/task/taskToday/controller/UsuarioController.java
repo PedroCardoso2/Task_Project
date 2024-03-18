@@ -43,12 +43,7 @@ public class UsuarioController {
     // Atualizar (Código 200)
     @PutMapping
     public ResponseEntity putUser(@RequestBody @Valid DadosAtualizacaoUsuario usu){
-        var usuario = db.getReferenceById(usu.id());
-
-        usuario.atualizarDados(usu);
-
-        return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
-
+        return service.atualizarUsuario(usu);
     }
 
 
