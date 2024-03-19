@@ -20,14 +20,14 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
 
-    public ResponseEntity buscar(Long Id){
+    public ResponseEntity buscar(Long Id) {
         var usuario = repository.getReferenceById(Id);
 
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
     }
 
 
-    public ResponseEntity inserirUsuario(DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity inserirUsuario(DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder) {
         var usuario = new Usuario(usu);
         repository.save(usuario);
 
@@ -36,7 +36,7 @@ public class UsuarioService {
         return ResponseEntity.created(uri).body(new DadosUsuarioSelecionado(usuario));
     }
 
-    public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu){
+    public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu) {
         var usuario = repository.getReferenceById(usu.id());
 
         usuario.atualizarDados(usu);
@@ -44,7 +44,5 @@ public class UsuarioService {
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
 
     }
-
-
 
 }

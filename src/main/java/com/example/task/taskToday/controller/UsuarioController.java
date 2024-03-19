@@ -27,22 +27,21 @@ public class UsuarioController {
 
     // Trazer Usuários (Código 200)
     @GetMapping("/{id}")
-    public ResponseEntity getUser(@PathVariable Long Id){
+    public ResponseEntity getUser(@PathVariable Long Id) {
         return service.buscar(Id);
     }
 
 
     // Cadastrar (Código 201)
     @PostMapping
-    public ResponseEntity postUser(@RequestBody @Valid DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity postUser(@RequestBody @Valid DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder) {
         return service.inserirUsuario(usu, uriComponentsBuilder);
     }
 
 
-
     // Atualizar (Código 200)
     @PutMapping
-    public ResponseEntity putUser(@RequestBody @Valid DadosAtualizacaoUsuario usu){
+    public ResponseEntity putUser(@RequestBody @Valid DadosAtualizacaoUsuario usu) {
         return service.atualizarUsuario(usu);
     }
 
