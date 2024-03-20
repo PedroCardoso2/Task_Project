@@ -4,9 +4,12 @@ import com.example.task.taskToday.domain.UsuarioRepository;
 import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioSelecionado;
+import com.example.task.taskToday.domain.dtos.DetalhamentoUsuarios;
 import com.example.task.taskToday.domain.entities.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +23,15 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
 
-    public ResponseEntity buscar(Long Id) {
+
+    public ResponseEntity<Page<DetalhamentoUsuarios>> buscarTodos(Pageable pageable) {
+        Page<Usuario> usuariosPage = repository.findAll(pageable);
+        Page<DetalhamentoUsuarios> detalhamentoPage =
+                usuariosPage.map(usuario -> new DetalhamentoUsuarios(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getDataNascimento()));
+        return ResponseEntity.ok(detalhamentoPage);
+    }
+
+    public ResponseEntity buscaUnica(Long Id){
         var usuario = repository.getReferenceById(Id);
 
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
@@ -37,12 +48,13 @@ public class UsuarioService {
     }
 
     public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu) {
-        var usuario = repository.getReferenceById(usu.id());
+        var usuario = repository.getReferenceById(usu.Id());
+
+
 
         usuario.atualizarDados(usu);
 
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
-
     }
 
 }

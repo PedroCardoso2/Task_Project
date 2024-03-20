@@ -24,7 +24,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Usu")
-    private Long id;
+    private Long Id;
 
     @Column(name = "nome_Usu")
     @NotNull
@@ -59,10 +59,24 @@ public class Usuario {
 
     // Atualização
     public void atualizarDados(DadosAtualizacaoUsuario usu) {
-        this.nome = usu.name();
-        this.email = usu.email();
-        this.senha = usu.senha();
-        this.dataNascimento = usu.dataNascimento();
-        this.sobreNome = usu.sobreNome();
+        if (usu.Id() != null) {
+            this.Id = usu.Id();
+        }
+        if (usu.nome() != null) {
+            this.nome = usu.nome();
+        }
+
+        if (usu.email() != null) {
+            this.email = usu.email();
+        }
+        if (usu.senha() != null) {
+            this.senha = usu.senha();
+        }
+        if (usu.dataNascimento() != null) {
+            this.dataNascimento = usu.dataNascimento();
+        }
+        if (usu.sobreNome() != null) {
+            this.sobreNome = usu.sobreNome();
+        }
     }
 }

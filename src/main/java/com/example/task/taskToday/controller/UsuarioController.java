@@ -5,11 +5,13 @@ import com.example.task.taskToday.domain.UsuarioRepository;
 
 import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
 import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
-import com.example.task.taskToday.domain.dtos.DadosUsuarioSelecionado;
-import com.example.task.taskToday.domain.entities.Usuario;
+import com.example.task.taskToday.domain.dtos.DetalhamentoUsuarios;
 import com.example.task.taskToday.domain.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,10 +28,16 @@ public class UsuarioController {
 
 
     // Trazer Usuários (Código 200)
-    @GetMapping("/{id}")
-    public ResponseEntity getUser(@PathVariable Long Id) {
-        return service.buscar(Id);
+    @GetMapping
+    public ResponseEntity<Page<DetalhamentoUsuarios>> getUser(@PageableDefault Pageable pageable) {
+        return service.buscarTodos(pageable);
     }
+
+    @GetMapping("/{Id}")
+    public ResponseEntity getOnlyUser(@PathVariable Long Id){
+        return service.buscaUnica(Id);
+    }
+
 
 
     // Cadastrar (Código 201)
