@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,6 +43,7 @@ public class UsuarioController {
 
     // Cadastrar (Código 201)
     @PostMapping
+    @Transactional
     public ResponseEntity postUser(@RequestBody @Valid DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder) {
         return service.inserirUsuario(usu, uriComponentsBuilder);
     }
@@ -49,6 +51,7 @@ public class UsuarioController {
 
     // Atualizar (Código 200)
     @PutMapping
+    @Transactional
     public ResponseEntity putUser(@RequestBody @Valid DadosAtualizacaoUsuario usu) {
         return service.atualizarUsuario(usu);
     }
