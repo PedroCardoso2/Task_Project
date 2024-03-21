@@ -57,4 +57,10 @@ public class UsuarioService {
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));
     }
 
+    public ResponseEntity deleteUser(Long Id) {
+         var usu = repository.getReferenceById(Id);
+         repository.deleteById(usu.getId());
+
+        return ResponseEntity.ok(new DadosUsuarioSelecionado(usu));
+    }
 }

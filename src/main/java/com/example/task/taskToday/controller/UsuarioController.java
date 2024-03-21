@@ -56,5 +56,11 @@ public class UsuarioController {
         return service.atualizarUsuario(usu);
     }
 
+    @DeleteMapping("/del/{Id}")
+    @Transactional
+    public ResponseEntity deleteUser(@PathVariable Long Id){
+        return service.deleteUser(Id);
+    }
+
 
 }
