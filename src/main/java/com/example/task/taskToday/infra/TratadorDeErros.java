@@ -2,9 +2,13 @@ package com.example.task.taskToday.infra;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class TratadorDeErros {
@@ -12,18 +16,28 @@ public class TratadorDeErros {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarErro404(){
         //retorna 404
-        return ResponseEntity.notFound().build();
+       return ResponseEntity.notFound().build();
+
     }
     //Me
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex){
-        var erros = ex.getFieldError();
+       List<FieldError> erros = ex.getBindingResult().getFieldErrors();
 
-        return ResponseEntity.badRequest().body(erros);
+
+        List<DadosErroValidacão> dadosErros = erros.stream().map(DadosErroValidacão::new).collect(Collectors.toList());
+
+        return ResponseEntity.badRequest().body(dadosErros);
     }
 
 
-    private record DadosErroValidacão(){}
+    // Personalizar a lista com DTO
+    private record DadosErroValidacão(String campo,String mensagem){
+        public DadosErroValidacão(FieldError error){
+            this(error.getField(), error.getDefaultMessage());
+        }
+
+    }
 
 
 
