@@ -50,8 +50,6 @@ public class UsuarioService {
     public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu) {
         var usuario = repository.getReferenceById(usu.Id());
 
-
-
         usuario.atualizarDados(usu);
 
         return ResponseEntity.ok(new DadosUsuarioSelecionado(usuario));

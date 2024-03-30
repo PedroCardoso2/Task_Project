@@ -1,4 +1,4 @@
-package com.example.task.taskToday.infra;
+package com.example.task.taskToday.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
