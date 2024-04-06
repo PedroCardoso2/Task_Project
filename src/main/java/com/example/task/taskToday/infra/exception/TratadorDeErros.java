@@ -19,7 +19,7 @@ public class TratadorDeErros {
        return ResponseEntity.notFound().build();
 
     }
-    //Me
+    //Metodos com erro 400
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex){
        List<FieldError> erros = ex.getBindingResult().getFieldErrors();

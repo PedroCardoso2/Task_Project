@@ -31,8 +31,6 @@ public class Usuario implements UserDetails {
     @Column(name = "Id_Usu")
     private Long Id;
 
-    private String login;
-
     @Column(name = "nome_Usu")
     @NotNull
     @Size(max = 50)
@@ -87,6 +85,8 @@ public class Usuario implements UserDetails {
         }
     }
 
+
+    // Classes necessárias para identificação de login e senha
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -99,7 +99,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.login;
+        return this.nome;
     }
 
     @Override

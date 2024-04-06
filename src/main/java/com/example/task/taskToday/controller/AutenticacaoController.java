@@ -1,6 +1,8 @@
 package com.example.task.taskToday.controller;
 
 import com.example.task.taskToday.domain.dtos.DadosAutenticacao;
+import com.example.task.taskToday.domain.entities.Usuario;
+import com.example.task.taskToday.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/login")
 public class AutenticacaoController {
 
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService service;
+
+
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+        var token = new UsernamePasswordAuthenticationToken(dados.nome(), dados.senha());
         var authetication = manager.authenticate(token);
 
         return ResponseEntity.ok().build();
