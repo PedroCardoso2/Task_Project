@@ -9,9 +9,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Usuario implements UserDetails {
+public class Usuario  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +41,8 @@ public class Usuario implements UserDetails {
     @Size(max = 50)
     private String sobreNome;
 
+    private String login;
+
     @NotBlank
     private String senha;
 
@@ -51,11 +53,13 @@ public class Usuario implements UserDetails {
 
     @Column(name = "data_Nascimento")
     @NotNull
-    private String dataNascimento;
+    private Date dataNascimento;
 
     // Cadastro
     public Usuario(DadosUsuarioCadastrar usu) {
         this.nome = usu.nome();
+        // Adicionado Login
+        this.login = usu.nome();
         this.email = usu.email();
         this.senha = usu.senha();
         this.dataNascimento = usu.dataNascimento();
@@ -69,6 +73,7 @@ public class Usuario implements UserDetails {
         }
         if (usu.nome() != null) {
             this.nome = usu.nome();
+            this.login = usu.nome();
         }
 
         if (usu.email() != null) {
@@ -82,43 +87,45 @@ public class Usuario implements UserDetails {
         }
         if (usu.sobreNome() != null) {
             this.sobreNome = usu.sobreNome();
+
         }
+
     }
 
 
     // Classes necessárias para identificação de login e senha
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.nome;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true ;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return senha;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return login;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

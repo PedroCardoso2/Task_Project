@@ -21,7 +21,7 @@ public record DadosUsuarioCadastrar(
         String email,
         @NotBlank
         @Column(name = "data_Nascimento")
-        String dataNascimento,
+        Date dataNascimento,
         @NotBlank
         String senha
 ) {

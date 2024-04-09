@@ -17,7 +17,7 @@ public record DadosAtualizacaoUsuario(
         @NotNull
         String email,
 
-        String dataNascimento,
+        Date dataNascimento,
         @NotNull
         String senha
 
