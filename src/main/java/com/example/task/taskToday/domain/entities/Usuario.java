@@ -1,137 +1,137 @@
-package com.example.task.taskToday.domain.entities;
+    package com.example.task.taskToday.domain.entities;
 
 
-import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
-import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+    import com.example.task.taskToday.domain.dtos.DadosAtualizacaoUsuario;
+    import com.example.task.taskToday.domain.dtos.DadosUsuarioCadastrar;
+    import jakarta.persistence.*;
+    import jakarta.validation.constraints.Email;
+    import jakarta.validation.constraints.NotBlank;
+    import jakarta.validation.constraints.NotNull;
+    import jakarta.validation.constraints.Size;
+    import lombok.*;
+    import org.springframework.security.core.GrantedAuthority;
+    import org.springframework.security.core.authority.SimpleGrantedAuthority;
+    import org.springframework.security.core.userdetails.UserDetails;
+    import org.springframework.security.core.userdetails.UserDetailsService;
 
 
-import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
+    import java.sql.Date;
+    import java.util.Collection;
+    import java.util.List;
 
 
-@Entity(name = "Usuario")
-@Table(name = "usuario")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Usuario  implements UserDetails {
+    @Entity(name = "usuario")
+    @Table(name = "usuario")
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public class Usuario  implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_Usu")
-    private Long Id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "Id_Usu")
+        private Long Id;
 
-    @Column(name = "nome_Usu")
-    @NotNull
-    @Size(max = 50)
-    private String nome;
+        @Column(name = "nome_Usu")
+        @NotNull
+        @Size(max = 50)
+        private String nome;
 
-    @Column(name = "sobrenome_Usu")
-    @NotNull
-    @Size(max = 50)
-    private String sobreNome;
+        @Column(name = "sobrenome_Usu")
+        @NotNull
+        @Size(max = 50)
+        private String sobreNome;
 
-    private String login;
+        private String login;
 
-    @NotBlank
-    private String senha;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
+        private String senha;
 
-    @Column(name = "data_Nascimento")
-    @NotNull
-    private Date dataNascimento;
+        @NotBlank
+        @Size(max = 50)
+        @Email
+        private String email;
 
-    // Cadastro
-    public Usuario(DadosUsuarioCadastrar usu) {
-        this.nome = usu.nome();
-        // Adicionado Login
-        this.login = usu.nome();
-        this.email = usu.email();
-        this.senha = usu.senha();
-        this.dataNascimento = usu.dataNascimento();
-        this.sobreNome = usu.sobreNome();
-    }
+        @Column(name = "data_Nascimento")
+        @NotNull
+        private Date dataNascimento;
 
-    // Atualização
-    public void atualizarDados(DadosAtualizacaoUsuario usu) {
-        if (usu.Id() != null) {
-            this.Id = usu.Id();
-        }
-        if (usu.nome() != null) {
+        // Cadastro
+        public Usuario(DadosUsuarioCadastrar usu) {
             this.nome = usu.nome();
+            // Adicionado Login
             this.login = usu.nome();
-        }
-
-        if (usu.email() != null) {
             this.email = usu.email();
-        }
-        if (usu.senha() != null) {
             this.senha = usu.senha();
-        }
-        if (usu.dataNascimento() != null) {
             this.dataNascimento = usu.dataNascimento();
-        }
-        if (usu.sobreNome() != null) {
             this.sobreNome = usu.sobreNome();
+        }
+
+        // Atualização
+        public void atualizarDados(DadosAtualizacaoUsuario usu) {
+            if (usu.Id() != null) {
+                this.Id = usu.Id();
+            }
+            if (usu.nome() != null) {
+                this.nome = usu.nome();
+                this.login = usu.nome();
+            }
+
+            if (usu.email() != null) {
+                this.email = usu.email();
+            }
+            if (usu.senha() != null) {
+                this.senha = usu.senha();
+            }
+            if (usu.dataNascimento() != null) {
+                this.dataNascimento = usu.dataNascimento();
+            }
+            if (usu.sobreNome() != null) {
+                this.sobreNome = usu.sobreNome();
+
+            }
 
         }
 
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return List.of(new SimpleGrantedAuthority("USER"));
+        }
+
+        @Override
+        public String getPassword() {
+            return this.senha;
+        }
+
+        @Override
+        public String getUsername() {
+            return this.login;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+
+
+        // Classes necessárias para identificação de login e senha
+
+
+
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
-    // Classes necessárias para identificação de login e senha
-
-
-
-}
