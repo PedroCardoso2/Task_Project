@@ -29,13 +29,5 @@ public record DadosUsuarioCadastrar(
         String senha
 ) {
         // Construtor adicional para criar um novo DadosUsuarioCadastrar
-        public DadosUsuarioCadastrar(
-                String nome,
-                String sobreNome,
-                String email,
-                Date dataNascimento,
-                String senha
-        ) {
-                this(null, nome, sobreNome, email, dataNascimento, senha);
-        }
+
 }

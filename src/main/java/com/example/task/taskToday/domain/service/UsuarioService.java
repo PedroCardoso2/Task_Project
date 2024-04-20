@@ -38,15 +38,6 @@ public class UsuarioService {
     }
 
 
-    public ResponseEntity inserirUsuario(DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder) {
-        var usuario = new Usuario(usu);
-        repository.save(usuario);
-
-        var uri = uriComponentsBuilder.path("/usu/table").buildAndExpand(usuario.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DadosUsuarioSelecionado(usuario));
-    }
-
     public ResponseEntity atualizarUsuario(DadosAtualizacaoUsuario usu) {
         var usuario = repository.getReferenceById(usu.Id());
 

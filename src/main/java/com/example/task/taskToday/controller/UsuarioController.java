@@ -41,13 +41,6 @@
 
 
 
-        // Cadastrar (Código 201)
-        @PostMapping
-        @Transactional
-        public ResponseEntity postUser(@RequestBody @Valid DadosUsuarioCadastrar usu, UriComponentsBuilder uriComponentsBuilder) {
-            return service.inserirUsuario(usu, uriComponentsBuilder);
-        }
-
 
         // Atualizar (Código 200)
         @PutMapping

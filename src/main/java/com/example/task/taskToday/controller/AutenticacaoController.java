@@ -25,7 +25,7 @@
     import java.util.Optional;
 
     @RestController
-    @RequestMapping("/login")
+    @RequestMapping("/auth")
     public class AutenticacaoController {
 
         @Autowired
@@ -37,7 +37,7 @@
         @Autowired
         private UsuarioRepository repository;
 
-        @PostMapping
+        @PostMapping("/login")
         public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
             var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
 
@@ -45,14 +45,10 @@
 
             var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
-            if(tokenJWT == null){
-                return ResponseEntity.ok("VAZIOO , SEM NADA ");
-            }
-
             return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
         }
 
-        @PostMapping("/rgs")
+        @PostMapping("/registro")
         public ResponseEntity registrarUsuario(@RequestBody @Valid DadosUsuarioCadastrar dados, UriComponentsBuilder uriComponentsBuilder) {
             if(repository.findByLogin(dados.nome()) != null) {
                 return ResponseEntity.badRequest().body("Login já existe");
