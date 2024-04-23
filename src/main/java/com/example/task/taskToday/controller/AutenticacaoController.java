@@ -61,7 +61,6 @@
             DadosUsuarioCadastrar dadosCriptografados = new DadosUsuarioCadastrar(
                     dados.id(),
                     dados.nome(),
-                    dados.sobreNome(),
                     dados.email(),
                     dados.dataNascimento(),
                     encryptedPassword

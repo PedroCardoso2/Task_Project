@@ -38,10 +38,6 @@
         @Size(max = 50)
         private String nome;
 
-        @Column(name = "sobrenome_Usu")
-        @NotNull
-        @Size(max = 50)
-        private String sobreNome;
 
         private String login;
 
@@ -61,11 +57,10 @@
         public Usuario(DadosUsuarioCadastrar usu) {
             this.nome = usu.nome();
             // Adicionado Login
-            this.login = usu.nome();
+            this.login = usu.email();
             this.email = usu.email();
             this.senha = usu.senha();
             this.dataNascimento = usu.dataNascimento();
-            this.sobreNome = usu.sobreNome();
         }
 
         // Atualização
@@ -75,21 +70,17 @@
             }
             if (usu.nome() != null) {
                 this.nome = usu.nome();
-                this.login = usu.nome();
             }
 
             if (usu.email() != null) {
                 this.email = usu.email();
+                this.login = usu.email();
             }
             if (usu.senha() != null) {
                 this.senha = usu.senha();
             }
             if (usu.dataNascimento() != null) {
                 this.dataNascimento = usu.dataNascimento();
-            }
-            if (usu.sobreNome() != null) {
-                this.sobreNome = usu.sobreNome();
-
             }
 
         }

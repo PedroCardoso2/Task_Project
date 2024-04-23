@@ -14,9 +14,6 @@ public record DadosUsuarioCadastrar(
         @Column(name = "nome_Usu")
         String nome,
 
-        @NotBlank
-        @Column(name = "sobrenome_Usu")
-        String sobreNome,
 
         @NotBlank
         String email,
