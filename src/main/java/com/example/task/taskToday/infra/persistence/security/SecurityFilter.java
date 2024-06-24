@@ -1,6 +1,7 @@
-package com.example.task.taskToday.naousar.infra.security;
+package com.example.task.taskToday.infra.persistence.security;
 
-import com.example.task.taskToday.naousar.domain.UsuarioRepository;
+import com.example.task.taskToday.infra.persistence.UsuarioRepository;
+import com.example.task.taskToday.infra.persistence.security.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
-            var usuario = repository.findByLogin(subject);
+            var usuario = repository.findByEmail(subject);
 
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

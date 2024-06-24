@@ -1,17 +1,15 @@
-package com.example.task.taskToday.naousar.domain.dtos;
+package com.example.task.taskToday.infra.controller;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public record DadosUsuarioCadastrar(
-        @NotBlank
-        Long id,
 
         @NotBlank
-        @Column(name = "nome_Usu")
         String nome,
 
 
@@ -19,12 +17,10 @@ public record DadosUsuarioCadastrar(
         String email,
 
         @NotBlank
-        @Column(name = "data_Nascimento")
-        Date dataNascimento,
+        LocalDateTime dataNascimento,
 
         @NotBlank
         String senha
 ) {
-        // Construtor adicional para criar um novo DadosUsuarioCadastrar
 
 }

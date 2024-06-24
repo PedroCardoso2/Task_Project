@@ -1,11 +1,11 @@
-package com.example.task.taskToday.naousar.infra.security;
+package com.example.task.taskToday.infra.persistence.security;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.example.task.taskToday.naousar.domain.entities.Usuario;
+import com.example.task.taskToday.infra.persistence.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +18,16 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String CHAVE_SECRETA;
 
-    public String gerarToken(Usuario usuario) {
+    public String gerarToken(UsuarioEntity usuarioEntity) {
         try {
             var algoritmo = Algorithm.HMAC256(CHAVE_SECRETA);
             return JWT.create()
-                    .withIssuer("API Voll.med")
-                    .withSubject(usuario.getLogin())
+                    .withIssuer("TaskList")
+                    .withSubject(usuarioEntity.getEmail())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception){
-            throw new RuntimeException("erro ao gerar token jwt", exception);
+            throw new RuntimeException("Erro ao gerar token jwt", exception);
         }
     }
 
@@ -35,7 +35,7 @@ public class TokenService {
         try {
             var algoritmo = Algorithm.HMAC256(CHAVE_SECRETA);
             return JWT.require(algoritmo)
-                    .withIssuer("API Voll.med")
+                    .withIssuer("TaskList")
                     .build()
                     .verify(tokenJWT)
                     .getSubject();

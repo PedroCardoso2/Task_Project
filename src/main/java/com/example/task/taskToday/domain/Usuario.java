@@ -1,5 +1,7 @@
 package com.example.task.taskToday.domain;
 
+import com.example.task.taskToday.domain.exception.EmailError;
+
 import java.time.LocalDateTime;
 
 public class Usuario {
@@ -14,7 +16,7 @@ public class Usuario {
     public Usuario(String nome, String email, LocalDateTime dateTime, String senha) {
 
 
-        if(email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) throw new IllegalArgumentException("Email cadastrado Incorretamente");
+        if(email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) throw new EmailError("Email cadastrado Incorretamente");
         if(senha == null) throw new IllegalArgumentException("Senha Inválida");
 
         this.nome = nome;
@@ -43,6 +45,7 @@ public class Usuario {
         return email;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -54,6 +57,8 @@ public class Usuario {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+
+
 
     public String getSenha() {
         return senha;
