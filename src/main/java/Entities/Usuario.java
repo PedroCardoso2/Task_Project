@@ -9,11 +9,20 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Usuario {
     private String nome;
     private String email;
     private String senha;
     private LocalDate dataNascimento;
+
+    public Usuario(String nome, String email, String senha, LocalDate dataNascimento) {
+        if(nome == null || nome.isEmpty() || email == null || email.isEmpty()
+        || senha == null || senha.isEmpty() || dataNascimento == null || dataNascimento.isAfter(LocalDate.now())) {
+            throw new RuntimeException("Valores incompatíveis");
+        }
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = dataNascimento;
+    }
 }
