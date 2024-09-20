@@ -2,6 +2,7 @@ package Services.UseCases;
 
 
 import Entities.Task;
+import Entities.Usuario;
 import Services.Db.TaskRepository;
 import Services.Db.UserRepository;
 
@@ -20,9 +21,10 @@ public class TaskUseCases implements TaskFactory{
     }
 
     @Override
-    public List<Task> getTask(int ident, String email) {
-        if(userRepository.findByEmail(email) == null) throw new RuntimeException("User não encontrado");
-        List<Task> taskList = taskRepository.findByUsuarioId(ident);
+    public List<Task> getTask(String email) {
+        Usuario user = userRepository.findByEmail(email);
+        if(user == null) throw new RuntimeException("User não encontrado");
+        List<Task> taskList = taskRepository.findByUsuario(user);
         taskList.stream().forEach(task -> {
            if(task.getDateTask() != LocalDate.now()){taskRepository.deleteById(task.getId());}
         });

@@ -5,5 +5,5 @@ import Entities.Task;
 import java.util.List;
 
 public interface TaskFactory {
-    List<Task> getTask(int ident, String email);
+    List<Task> getTask(String email);
 }
