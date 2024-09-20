@@ -5,6 +5,8 @@ import Entities.Task;
 import Services.Db.TaskRepository;
 import Services.Db.UserRepository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskUseCases implements TaskFactory{
@@ -20,16 +22,12 @@ public class TaskUseCases implements TaskFactory{
     @Override
     public List<Task> getTask(int ident, String email) {
         if(userRepository.findByEmail(email) == null) throw new RuntimeException("User não encontrado");
-        return taskRepository.findByUsuarioId(ident);
+        List<Task> taskList = taskRepository.findByUsuarioId(ident);
+        taskList.stream().forEach(task -> {
+           if(task.getDateTask() != LocalDate.now()){taskRepository.deleteById(task.getId());}
+        });
+
+        return taskList;
     }
 
-    @Override
-    public void addTask(Task task) {
-        taskRepository.save(task);
-    }
-
-    @Override
-    public void deleteTask(int id) {
-        taskRepository.deleteById(id);
-    }
 }
