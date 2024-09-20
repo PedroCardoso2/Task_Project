@@ -22,4 +22,14 @@ public class TaskUseCases implements TaskFactory{
         if(userRepository.findByEmail(email) == null) throw new RuntimeException("User não encontrado");
         return taskRepository.findByUsuarioId(ident);
     }
+
+    @Override
+    public void addTask(Task task) {
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        taskRepository.deleteById(id);
+    }
 }
