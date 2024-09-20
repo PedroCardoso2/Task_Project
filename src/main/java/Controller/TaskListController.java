@@ -28,10 +28,7 @@ public class TaskListController {
 
     @PostMapping("/add")
     public ResponseEntity<Task>  adicionarTask(@RequestBody DadosAdicionarAtividade dados){
-        Usuario usuario = userRepository.findByEmail(dados.email());
-        if (usuario == null) throw new RuntimeException("Usuario não existe");
-        Task task = new Task(usuario, dados.desctask());
-        return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
+        return ResponseEntity.status(HttpStatus.OK).body(taskUseCases.createTask(dados.email(), dados.desctask()));
     }
 
     @GetMapping
