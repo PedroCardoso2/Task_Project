@@ -1,15 +1,27 @@
 package Entities;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "Usuario")
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Task> tasks;
+
     private String nome;
     private String email;
     private String senha;
@@ -25,4 +37,6 @@ public class Usuario {
         this.senha = senha;
         this.dataNascimento = dataNascimento;
     }
+
+    public Usuario() {}
 }
