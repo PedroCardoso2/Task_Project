@@ -8,6 +8,8 @@ import Services.Db.TaskRepository;
 import Services.Db.UserRepository;
 import Services.UseCases.TaskUseCases;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,17 +27,17 @@ public class TaskListController {
     private TaskUseCases taskUseCases;
 
     @PostMapping("/add")
-    public Task adicionarTask(@RequestBody DadosAdicionarAtividade dados){
+    public ResponseEntity<Task>  adicionarTask(@RequestBody DadosAdicionarAtividade dados){
         Usuario usuario = userRepository.findByEmail(dados.email());
         if (usuario == null) throw new RuntimeException("Usuario não existe");
         Task task = new Task(usuario, dados.desctask());
-        return taskRepository.save(task);
+        return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(task));
     }
 
     @GetMapping
-    public List<Task> list(@RequestBody String email){
-        return taskUseCases.getTask(email);
+    public ResponseEntity<List<Task>> list(@RequestBody String email){
+        return ResponseEntity.status(HttpStatus.OK).body(taskUseCases.getTask(email));
     }
 
-    
+
 }
