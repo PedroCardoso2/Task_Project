@@ -38,6 +38,4 @@ public class TaskListController {
     public ResponseEntity<List<Task>> list(@RequestBody String email){
         return ResponseEntity.status(HttpStatus.OK).body(taskUseCases.getTask(email));
     }
-
-
 }

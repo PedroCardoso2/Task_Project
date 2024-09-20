@@ -29,7 +29,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 listen/mysql-data/mysql.sock
-
+src/main/resources/application.properties
 
 ### VS Code ###
 .vscode/
