@@ -26,15 +26,17 @@ public class Usuario {
     private String email;
     private String senha;
     private LocalDate dataNascimento;
+    private String role;
 
-    public Usuario(String nome, String email, String senha, LocalDate dataNascimento) {
+    public Usuario(String nome, String email, String senha, LocalDate dataNascimento, String role) {
         if(nome == null || nome.isEmpty() || email == null || email.isEmpty()
-        || senha == null || senha.isEmpty() || dataNascimento == null || dataNascimento.isAfter(LocalDate.now())) {
+        || senha == null || senha.isEmpty() || dataNascimento == null || dataNascimento.isAfter(LocalDate.now()) || role.isEmpty()){
             throw new RuntimeException("Valores incompatíveis");
         }
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.role = role;
         this.dataNascimento = dataNascimento;
     }
 
