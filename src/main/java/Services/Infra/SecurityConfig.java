@@ -1,28 +1,51 @@
 package Services.Infra;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private SecurityFilter filter;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(crf -> crf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register").permitAll() // Rotas públicas
-                        .anyRequest().authenticated() // Qualquer outra rota exige autenticação
-                );
-        return http.build();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        return http.csrf(c -> c.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/all").permitAll())
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(MyUserDetailsService myUserDetailsService) {
-        return myUserDetailsService;
+    public AuthenticationManager manager (AuthenticationConfiguration configuration) throws Exception{
+        return configuration.getAuthenticationManager();
     }
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+
 }
+

@@ -5,22 +5,23 @@ import Entities.Task;
 import Entities.Usuario;
 import Services.Db.TaskRepository;
 import Services.Db.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TaskUseCases implements TaskFactory{
-    private final TaskRepository taskRepository;
-    private final UserRepository userRepository;
 
+    @Autowired
+    private  TaskRepository taskRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public TaskUseCases(TaskRepository taskRepository, UserRepository userRepository) {
-        this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<Task> getTask(String email) {
