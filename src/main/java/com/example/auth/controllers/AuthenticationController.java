@@ -49,6 +49,7 @@ public class AuthenticationController {
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), encryptedPassword, data.role());
         repository.save(newUser);
-        return ResponseEntity.ok().body(new ResponseTokenDTO(encryptedPassword));
+        var token = tokenService.generateToken(newUser);
+        return ResponseEntity.ok().body(new ResponseTokenDTO(token));
     }
 }
