@@ -1,30 +1,34 @@
 package com.example.auth.domain.user;
 
+import com.example.auth.domain.tasks.Task;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Table(name = "users")
-@Entity(name = "users")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+
+@Table(name = "usuario")
+@Entity
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_usuario;
+
+    @Column(unique = true)
     private String login;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 
     public User(String login, String password, UserRole role){
         this.login = login;
@@ -32,10 +36,17 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public User() {}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -62,4 +73,16 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+    public String getLogin() {
+        return login;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.auth.services;
 
+import com.example.auth.domain.user.User;
 import com.example.auth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,11 @@ public class AuthorizationService implements UserDetailsService {
     @Autowired
     UserRepository repository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByLogin(username);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = repository.findByLogin(login);
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.getAuthorities());
     }
 }

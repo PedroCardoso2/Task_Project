@@ -1,8 +1,8 @@
 package com.example.auth.controllers;
 
-import com.example.auth.domain.user.AuthenticationDTO;
-import com.example.auth.domain.user.LoginResponseDTO;
-import com.example.auth.domain.user.RegisterDTO;
+import com.example.auth.domain.dtos.AuthenticationDTO;
+import com.example.auth.domain.dtos.LoginResponseDTO;
+import com.example.auth.domain.dtos.RegisterDTO;
 import com.example.auth.domain.user.User;
 import com.example.auth.infra.security.TokenService;
 import com.example.auth.repositories.UserRepository;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
