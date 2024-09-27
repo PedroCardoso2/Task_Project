@@ -74,7 +74,9 @@ public class User implements UserDetails {
         return true;
     }
 
-
+    public Integer getId_usuario() {
+        return id_usuario;
+    }
 
     public String getLogin() {
         return login;

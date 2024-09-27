@@ -7,13 +7,12 @@ import com.example.auth.repositories.TaskRepository;
 import com.example.auth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class TaskUseCases implements TaskFactory{
+public class TaskUseCases implements TaskFactory {
 
     @Autowired
     private  TaskRepository taskRepository;
@@ -24,7 +23,7 @@ public class TaskUseCases implements TaskFactory{
 
     @Override
     public List<Task> getTask(String login) {
-        User user = userRepository.findByLogin(login);
+        User user = (User) userRepository.findByLogin(login);
 
         if (user == null) throw new RuntimeException("User não encontrado");
         List<Task> taskList = taskRepository.findByUser(user);

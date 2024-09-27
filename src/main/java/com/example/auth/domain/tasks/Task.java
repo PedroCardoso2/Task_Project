@@ -74,4 +74,14 @@ public class Task {
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "description='" + description + '\'' +
+                ", user=" + user +
+                ", taskStatus=" + taskStatus +
+                ", dateTask=" + dateTask +
+                '}';
+    }
 }
