@@ -19,6 +19,6 @@ public class AuthorizationService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Usuário não encontrado");
         }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.getAuthorities());
+        return user;
     }
 }
