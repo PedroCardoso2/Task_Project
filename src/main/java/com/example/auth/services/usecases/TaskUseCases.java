@@ -24,11 +24,9 @@ public class TaskUseCases implements TaskFactory {
     @Override
     public List<Task> getTask(String login) {
         User user = (User) userRepository.findByLogin(login);
-
         if (user == null) throw new RuntimeException("User não encontrado");
         List<Task> taskList = taskRepository.findByUser(user);
         taskList.removeIf(task -> !task.getDateTask().isEqual(LocalDate.now()));
-
         return taskList;
     }
 
