@@ -20,6 +20,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_usuario;
 
+    private String name;
+
     @Column(unique = true)
     private String login;
     private String password;
@@ -30,7 +32,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
 
-    public User(String login, String password, UserRole role){
+    public User(String login, String password, UserRole role, String name){
+        this.name = name;
         this.login = login;
         this.password = password;
         this.role = role;
