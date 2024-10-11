@@ -20,6 +20,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+/*
+ Verificar email iguais.
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
