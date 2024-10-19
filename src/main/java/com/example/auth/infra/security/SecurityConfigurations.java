@@ -42,6 +42,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/taks/add").permitAll()
                         .requestMatchers(HttpMethod.GET, "/taks/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/taks/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/taks/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

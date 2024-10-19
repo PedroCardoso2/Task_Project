@@ -39,4 +39,20 @@ public class TaskUseCases implements TaskFactory {
         Task task = new Task(description, user , TaskStatus.PENDENTE);
         return taskRepository.save(task);
     }
+
+    @Override
+    public Task updateTask(int id) {
+        Task tk = taskRepository.findById(id);
+        if(tk == null) throw new RuntimeException("Task Inexistente");
+        tk.setTaskStatus(TaskStatus.FINALIZADO);
+        return tk;
+    }
+
+    @Override
+    public Boolean deleteTask(int id) {
+        Task tk = taskRepository.findById(id);
+        if(tk == null) return false;
+        taskRepository.deleteById(tk.getId());
+        return true;
+    }
 }
